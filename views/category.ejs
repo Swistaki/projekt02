@@ -2,13 +2,40 @@
 
 <main>
   <h1><%= title %></h1>
-  <ul id="cards">
-    <% category.cards.forEach(function(card){ %>
-    <li><%= card.front %> - <%= card.back %></li>
-    <% }) %>
-  </ul>
+
+  <section>
+    <h2>Przepisy w kategorii</h2>
+    <ul id="recipes">
+      <% if (category.recipes && category.recipes.length) { %>
+        <% category.recipes.forEach(function(recipe){ %>
+          <li>
+            <strong><%= recipe.title %></strong>
+            <% if (recipe.cook_time_min) { %> — <%= recipe.cook_time_min %> min <% } %>
+            <% if (recipe.servings) { %> , porcje: <%= recipe.servings %> <% } %>
+
+            <div class="ingredients">
+              <em>Składniki:</em>
+              <ul>
+                <% (recipe.ingredients || []).forEach(function(ing){ %>
+                  <li><%= ing %></li>
+                <% }) %>
+              </ul>
+            </div>
+
+            <div class="instructions">
+              <em>Przygotowanie:</em>
+              <p><%= recipe.instructions %></p>
+            </div>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>Brak przepisów w tej kategorii.</li>
+      <% } %>
+    </ul>
+  </section>
+
   <div>
-    <h3>Nowa fiszka</h3>
+    <h3>Nowy przepis</h3>
     <%- include("forms/new_card.ejs") %>
   </div>
 </main>
