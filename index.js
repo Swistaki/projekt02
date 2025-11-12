@@ -45,7 +45,6 @@ app.post("/recipes/:category_id/new", (req, res) => {
     return;
   }
 
-  // Zamiana pola ingredients (textarea — jeden składnik na wiersz) na tablicę stringów
   const rawIngredients = req.body.ingredients || "";
   const ingredientsArray = rawIngredients
     .split(/\r?\n/)
@@ -77,7 +76,6 @@ app.post("/recipes/:category_id/new", (req, res) => {
       errors,
       title: `Nowy przepis — ${category.name}`,
       category,
-      // Prefill form fields in the view
       recipe: {
         title: req.body.title,
         ingredients: rawIngredients,
